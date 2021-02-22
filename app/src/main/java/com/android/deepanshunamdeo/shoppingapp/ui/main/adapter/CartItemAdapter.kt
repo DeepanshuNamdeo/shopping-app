@@ -80,10 +80,8 @@ class CartItemAdapter(
     override fun getItemCount(): Int = cartItemList.size
 
     override fun onItemAddedToCart(cartItem: CartItem) {
-        TODO("Not yet implemented")
     }
 
     override fun onItemRemovedFromCart(cartItem: CartItem) {
-        TODO("Not yet implemented")
     }
 }
