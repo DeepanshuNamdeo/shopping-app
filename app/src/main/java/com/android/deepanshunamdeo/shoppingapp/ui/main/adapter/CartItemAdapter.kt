@@ -28,7 +28,7 @@ class CartItemAdapter(
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): CartItemAdapter.CartItemViewHolder {
+    ): CartItemViewHolder {
 
         return CartItemViewHolder(
             LayoutInflater.from(parent.context)
@@ -36,7 +36,7 @@ class CartItemAdapter(
         )
     }
 
-    override fun onBindViewHolder(holder: CartItemAdapter.CartItemViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: CartItemViewHolder, position: Int) {
         val currentItem = cartItemList[position]
         holder.textView_item_name.text = currentItem.cartItemName
         holder.textView_item_price.text = currentItem.cartItemPrice.toString()
@@ -44,21 +44,15 @@ class CartItemAdapter(
 
 
         holder.imageButton_add_Item_to_cart.setOnClickListener {
-            listener.onItemRemovedFromCart(currentItem)//removing current and updating the new
-            listener.onItemAddedToCart(
-                CartItem(
+            listener.updateItemInCart(CartItem(
                     currentItem.cartItemName,
                     currentItem.cartItemQuantity + 1,
-                    currentItem.cartItemPrice
-                )
-            )
+                    currentItem.cartItemPrice))
             holder.textView_item_quantity.text = (currentItem.cartItemQuantity + 1).toString()
         }
         holder.imageButton_remove_Item_from_cart.setOnClickListener {
-
-            listener.onItemRemovedFromCart(currentItem)
             if (currentItem.cartItemQuantity > 1) {
-                listener.onItemAddedToCart(
+                listener.updateItemInCart(
                     CartItem(
                         currentItem.cartItemName,
                         currentItem.cartItemQuantity - 1,
@@ -66,6 +60,8 @@ class CartItemAdapter(
                     )
                 )
                 holder.textView_item_quantity.text = (currentItem.cartItemQuantity - 1).toString()
+            }else{
+                listener.onItemRemovedFromCart(currentItem)
             }
         }
     }
@@ -83,5 +79,9 @@ class CartItemAdapter(
     }
 
     override fun onItemRemovedFromCart(cartItem: CartItem) {
+    }
+
+    override fun updateItemInCart(cartItem: CartItem) {
+
     }
 }

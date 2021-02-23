@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.android.deepanshunamdeo.shoppingapp.R
@@ -45,7 +44,7 @@ class CartActivity : AppCompatActivity(), ShoppingItemAdapter.ItemAddRemoveOnCli
         )
         recyclerView_cart_list_item.adapter = adapter
 
-        cartItemViewModel.getAllCartItem.observe(this, Observer {
+        cartItemViewModel.getAllCartItem.observe(this, {
             if (it.isEmpty()) {
                 ConstraintLayout_when_cart_is_not_empty.visibility = View.GONE
                 LinearLayout_when_cart_is_empty.visibility = View.VISIBLE
@@ -74,7 +73,11 @@ class CartActivity : AppCompatActivity(), ShoppingItemAdapter.ItemAddRemoveOnCli
         cartItemViewModel.deleteSingleItemFromCart(cartItem)
     }
 
-    fun checkout(view: View) {
+    override fun updateItemInCart(cartItem: CartItem) {
+        cartItemViewModel.updateItemInCart(cartItem)
+    }
+
+    fun checkout() {
         cartItemViewModel.deleteAllItemFromCart()
         startActivity(Intent(this, ThankYouActivity::class.java))
         finish()

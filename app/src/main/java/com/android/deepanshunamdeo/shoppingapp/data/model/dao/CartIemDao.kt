@@ -22,8 +22,6 @@ interface CartIemDao {
     @Query("select sum(cartItemQuantity) from cart_item_table  ")
     fun cartQuantity(): LiveData<Int>
 
-    @Query("select sum(cartItemQuantity) from cart_item_table where cartItemName = :name ")
-    fun getQuantityFromName(name: String): LiveData<Int>
-
-
+    @Update
+    suspend fun updateItemInCart(cartItem: CartItem)
 }

@@ -9,7 +9,6 @@ class CartItemRepository @Inject constructor(private val cartIemDao: CartIemDao)
 
     val getAllCartItem: LiveData<List<CartItem>> = cartIemDao.getAllCartItems()
     val cartQuantity: LiveData<Int> = cartIemDao.cartQuantity()
-    fun getQuantityFromName(name: String): LiveData<Int> = cartIemDao.getQuantityFromName(name)
 
     suspend fun insertSingleItemToCart(cartItem: CartItem) {
         cartIemDao.insertSingleItemToCart(cartItem)
@@ -22,6 +21,11 @@ class CartItemRepository @Inject constructor(private val cartIemDao: CartIemDao)
     suspend fun deleteAllItemFromCart() {
         cartIemDao.deleteAllItemFromCart()
     }
+
+    suspend fun updateItemInCart(cartItem: CartItem){
+        cartIemDao.updateItemInCart(cartItem)
+    }
+
 
 
 }

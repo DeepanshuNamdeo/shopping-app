@@ -17,8 +17,6 @@ class CartItemViewModel @Inject constructor(private val cartItemRepository: Cart
     val getAllCartItem: LiveData<List<CartItem>> = cartItemRepository.getAllCartItem
     val cartQuantity: LiveData<Int> = cartItemRepository.cartQuantity
 
-    fun cartQuantity(name: String): LiveData<Int> = cartItemRepository.getQuantityFromName(name)
-
     fun insertSingleItemToCart(cartItem: CartItem) = viewModelScope.launch {
         cartItemRepository.insertSingleItemToCart(cartItem)
     }
@@ -30,6 +28,11 @@ class CartItemViewModel @Inject constructor(private val cartItemRepository: Cart
     fun deleteAllItemFromCart() = viewModelScope.launch {
         cartItemRepository.deleteAllItemFromCart()
     }
+
+    fun updateItemInCart(cartItem: CartItem) = viewModelScope.launch {
+        cartItemRepository.updateItemInCart(cartItem)
+    }
+
 
 
 }

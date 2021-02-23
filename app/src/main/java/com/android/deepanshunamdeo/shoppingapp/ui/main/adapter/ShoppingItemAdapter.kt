@@ -51,7 +51,7 @@ class ShoppingItemAdapter(
         holder.textView_item_quantity.text = "0"
 
         Glide.with(holder.imageView.context).load(currentShoppingItem.image_url)
-            .placeholder(R.drawable.ic_baseline_fastfood_24).into(holder.imageView);
+            .placeholder(R.drawable.ic_baseline_fastfood_24).into(holder.imageView)
 
 
         if (cartItemList.isNotEmpty()) {
@@ -86,14 +86,10 @@ class ShoppingItemAdapter(
                                 (cartItem.cartItemQuantity + 1).toString()
 
                         } else {
-                            listener.onItemRemovedFromCart(cartItem)
-                            listener.onItemAddedToCart(
-                                CartItem(
-                                    currentShoppingItem.name,
-                                    cartItem.cartItemQuantity + 1,
-                                    currentShoppingItem.price
-                                )
-                            )
+                                listener.updateItemInCart(CartItem(
+                                        currentShoppingItem.name,
+                                        cartItem.cartItemQuantity + 1,
+                                        currentShoppingItem.price))
                             holder.textView_item_quantity.text =
                                 (cartItem.cartItemQuantity + 1).toString()
 
@@ -130,20 +126,11 @@ class ShoppingItemAdapter(
                                 (cartItem.cartItemQuantity - 1).toString()
                         }
                         if (cartItem.cartItemQuantity > 1) {
-                            listener.onItemRemovedFromCart(
-                                CartItem(
-                                    currentShoppingItem.name,
-                                    cartItem.cartItemQuantity,
-                                    currentShoppingItem.price
-                                )
-                            )
-                            listener.onItemAddedToCart(
-                                CartItem(
-                                    currentShoppingItem.name,
-                                    cartItem.cartItemQuantity - 1,
-                                    currentShoppingItem.price
-                                )
-                            )
+                                listener.updateItemInCart(CartItem(
+                                        currentShoppingItem.name,
+                                        cartItem.cartItemQuantity - 1,
+                                        currentShoppingItem.price
+                                ))
                             holder.textView_item_quantity.text =
                                 (cartItem.cartItemQuantity - 1).toString()
                         } else {
@@ -196,6 +183,6 @@ class ShoppingItemAdapter(
 
         fun onItemAddedToCart(cartItem: CartItem)
         fun onItemRemovedFromCart(cartItem: CartItem)
-
+        fun updateItemInCart(cartItem: CartItem)
     }
 }

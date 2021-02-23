@@ -47,7 +47,7 @@ class ShoppingHomeActivity : AppCompatActivity(), ItemAddRemoveOnClickListener {
 
     override fun onResume() {
         super.onResume()
-        shoppingItemViewModel.getAllShoppingItem.observe(this, Observer {
+        shoppingItemViewModel.getAllShoppingItem.observe(this, {
             adapter.updateList(it as List<ShoppingItem>)
         })
     }
@@ -77,11 +77,11 @@ class ShoppingHomeActivity : AppCompatActivity(), ItemAddRemoveOnClickListener {
             onOptionsItemSelected(menuItem)
         }
 
-        cartItemViewModel.getAllCartItem.observe(this, Observer {
+        cartItemViewModel.getAllCartItem.observe(this, {
             adapter.updateCart(it as List<CartItem>)
         })
 
-        cartItemViewModel.cartQuantity.observe(this, Observer {
+        cartItemViewModel.cartQuantity.observe(this, {
             if (it != null) {
                 setupBadgeCount(it)
             } else {
@@ -123,6 +123,10 @@ class ShoppingHomeActivity : AppCompatActivity(), ItemAddRemoveOnClickListener {
 
     override fun onItemRemovedFromCart(cartItem: CartItem) {
         cartItemViewModel.deleteSingleItemFromCart(cartItem)
+    }
+
+    override fun updateItemInCart(cartItem: CartItem) {
+        cartItemViewModel.updateItemInCart(cartItem)
     }
 
 }
